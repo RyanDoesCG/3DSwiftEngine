@@ -1,18 +1,16 @@
-//
-//  AppDelegate.swift
-//  WolfRun
-//
-//  Created by user on 13/02/2017.
-//  Copyright © 2017 Baked Goods Studios. All rights reserved.
-//
-
+/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+ *  AppDelegate.swift
+ *  WolfRun
+ *
+ *  Created by Ryan Needham on 13/02/2017.
+ *  Copyright © 2017 Baked Goods Studios. All rights reserved.
+ * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 import UIKit
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
-
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
@@ -40,7 +38,5 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func applicationWillTerminate(_ application: UIApplication) {
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
     }
-
-
 }
 

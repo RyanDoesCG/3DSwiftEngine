@@ -1,11 +1,10 @@
-//
-//  Vec3.swift
-//  WolfRun
-//
-//  Created by user on 13/02/2017.
-//  Copyright © 2017 Baked Goods Studios. All rights reserved.
-//
-
+/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+ *  Vec3.swift
+ *  WolfRun
+ *
+ *  Created by Ryan Needham on 13/02/2017.
+ *  Copyright © 2017 Baked Goods Studios. All rights reserved.
+ * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 import Foundation
 
 class Vec3 {

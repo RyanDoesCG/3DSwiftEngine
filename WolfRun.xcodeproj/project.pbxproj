@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		CEE6759F1E513CA000051914 /* Vec3.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEE6759E1E513CA000051914 /* Vec3.swift */; };
 		CEE675A11E513D1800051914 /* Actor.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEE675A01E513D1800051914 /* Actor.swift */; };
+		CEE675A31E5146D100051914 /* ShaderProgram.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEE675A21E5146D100051914 /* ShaderProgram.swift */; };
+		CEE675A51E514E1300051914 /* Mesh.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEE675A41E514E1300051914 /* Mesh.swift */; };
 		CEF5A99B1E5135070008D0BB /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEF5A99A1E5135070008D0BB /* AppDelegate.swift */; };
 		CEF5A99D1E5135070008D0BB /* Shader.frag in Resources */ = {isa = PBXBuildFile; fileRef = CEF5A99C1E5135070008D0BB /* Shader.frag */; };
 		CEF5A99F1E5135070008D0BB /* Shader.vert in Resources */ = {isa = PBXBuildFile; fileRef = CEF5A99E1E5135070008D0BB /* Shader.vert */; };
@@ -21,6 +23,8 @@
 /* Begin PBXFileReference section */
 		CEE6759E1E513CA000051914 /* Vec3.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Vec3.swift; sourceTree = "<group>"; };
 		CEE675A01E513D1800051914 /* Actor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Actor.swift; sourceTree = "<group>"; };
+		CEE675A21E5146D100051914 /* ShaderProgram.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShaderProgram.swift; sourceTree = "<group>"; };
+		CEE675A41E514E1300051914 /* Mesh.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Mesh.swift; sourceTree = "<group>"; };
 		CEF5A9971E5135070008D0BB /* WolfRun.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WolfRun.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		CEF5A99A1E5135070008D0BB /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		CEF5A99C1E5135070008D0BB /* Shader.frag */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; name = Shader.frag; path = Shaders/Shader.frag; sourceTree = "<group>"; };
@@ -67,6 +71,8 @@
 				CEF5A99E1E5135070008D0BB /* Shader.vert */,
 				CEF5A9A01E5135070008D0BB /* GameViewController.swift */,
 				CEE6759E1E513CA000051914 /* Vec3.swift */,
+				CEE675A21E5146D100051914 /* ShaderProgram.swift */,
+				CEE675A41E514E1300051914 /* Mesh.swift */,
 				CEE675A01E513D1800051914 /* Actor.swift */,
 				CEF5A9A21E5135070008D0BB /* Main.storyboard */,
 				CEF5A9A51E5135070008D0BB /* Assets.xcassets */,
@@ -151,7 +157,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CEE675A51E514E1300051914 /* Mesh.swift in Sources */,
 				CEF5A9A11E5135070008D0BB /* GameViewController.swift in Sources */,
+				CEE675A31E5146D100051914 /* ShaderProgram.swift in Sources */,
 				CEE6759F1E513CA000051914 /* Vec3.swift in Sources */,
 				CEF5A99B1E5135070008D0BB /* AppDelegate.swift in Sources */,
 				CEE675A11E513D1800051914 /* Actor.swift in Sources */,
