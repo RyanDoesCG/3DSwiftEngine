@@ -7,9 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		CEE6759F1E513CA000051914 /* Vec3.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEE6759E1E513CA000051914 /* Vec3.swift */; };
+		CEE675A11E513D1800051914 /* Actor.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEE675A01E513D1800051914 /* Actor.swift */; };
 		CEF5A99B1E5135070008D0BB /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEF5A99A1E5135070008D0BB /* AppDelegate.swift */; };
-		CEF5A99D1E5135070008D0BB /* Shader.fsh in Resources */ = {isa = PBXBuildFile; fileRef = CEF5A99C1E5135070008D0BB /* Shader.fsh */; };
-		CEF5A99F1E5135070008D0BB /* Shader.vsh in Resources */ = {isa = PBXBuildFile; fileRef = CEF5A99E1E5135070008D0BB /* Shader.vsh */; };
+		CEF5A99D1E5135070008D0BB /* Shader.frag in Resources */ = {isa = PBXBuildFile; fileRef = CEF5A99C1E5135070008D0BB /* Shader.frag */; };
+		CEF5A99F1E5135070008D0BB /* Shader.vert in Resources */ = {isa = PBXBuildFile; fileRef = CEF5A99E1E5135070008D0BB /* Shader.vert */; };
 		CEF5A9A11E5135070008D0BB /* GameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEF5A9A01E5135070008D0BB /* GameViewController.swift */; };
 		CEF5A9A41E5135070008D0BB /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CEF5A9A21E5135070008D0BB /* Main.storyboard */; };
 		CEF5A9A61E5135070008D0BB /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CEF5A9A51E5135070008D0BB /* Assets.xcassets */; };
@@ -17,10 +19,12 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		CEE6759E1E513CA000051914 /* Vec3.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Vec3.swift; sourceTree = "<group>"; };
+		CEE675A01E513D1800051914 /* Actor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Actor.swift; sourceTree = "<group>"; };
 		CEF5A9971E5135070008D0BB /* WolfRun.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WolfRun.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		CEF5A99A1E5135070008D0BB /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		CEF5A99C1E5135070008D0BB /* Shader.fsh */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; name = Shader.fsh; path = Shaders/Shader.fsh; sourceTree = "<group>"; };
-		CEF5A99E1E5135070008D0BB /* Shader.vsh */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; name = Shader.vsh; path = Shaders/Shader.vsh; sourceTree = "<group>"; };
+		CEF5A99C1E5135070008D0BB /* Shader.frag */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; name = Shader.frag; path = Shaders/Shader.frag; sourceTree = "<group>"; };
+		CEF5A99E1E5135070008D0BB /* Shader.vert */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; name = Shader.vert; path = Shaders/Shader.vert; sourceTree = "<group>"; };
 		CEF5A9A01E5135070008D0BB /* GameViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameViewController.swift; sourceTree = "<group>"; };
 		CEF5A9A31E5135070008D0BB /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		CEF5A9A51E5135070008D0BB /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -59,9 +63,11 @@
 			isa = PBXGroup;
 			children = (
 				CEF5A99A1E5135070008D0BB /* AppDelegate.swift */,
-				CEF5A99C1E5135070008D0BB /* Shader.fsh */,
-				CEF5A99E1E5135070008D0BB /* Shader.vsh */,
+				CEF5A99C1E5135070008D0BB /* Shader.frag */,
+				CEF5A99E1E5135070008D0BB /* Shader.vert */,
 				CEF5A9A01E5135070008D0BB /* GameViewController.swift */,
+				CEE6759E1E513CA000051914 /* Vec3.swift */,
+				CEE675A01E513D1800051914 /* Actor.swift */,
 				CEF5A9A21E5135070008D0BB /* Main.storyboard */,
 				CEF5A9A51E5135070008D0BB /* Assets.xcassets */,
 				CEF5A9A71E5135070008D0BB /* LaunchScreen.storyboard */,
@@ -131,10 +137,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				CEF5A9A41E5135070008D0BB /* Main.storyboard in Resources */,
-				CEF5A99F1E5135070008D0BB /* Shader.vsh in Resources */,
+				CEF5A99F1E5135070008D0BB /* Shader.vert in Resources */,
 				CEF5A9A61E5135070008D0BB /* Assets.xcassets in Resources */,
 				CEF5A9A91E5135070008D0BB /* LaunchScreen.storyboard in Resources */,
-				CEF5A99D1E5135070008D0BB /* Shader.fsh in Resources */,
+				CEF5A99D1E5135070008D0BB /* Shader.frag in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -146,7 +152,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				CEF5A9A11E5135070008D0BB /* GameViewController.swift in Sources */,
+				CEE6759F1E513CA000051914 /* Vec3.swift in Sources */,
 				CEF5A99B1E5135070008D0BB /* AppDelegate.swift in Sources */,
+				CEE675A11E513D1800051914 /* Actor.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -308,6 +316,7 @@
 				CEF5A9AF1E5135070008D0BB /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

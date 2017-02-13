@@ -8,16 +8,19 @@
 
 import GLKit
 import OpenGLES
+import CoreMotion
 
 func BUFFER_OFFSET(_ i: Int) -> UnsafeRawPointer {
     return UnsafeRawPointer(bitPattern: i)!
 }
 
 let UNIFORM_MODELVIEWPROJECTION_MATRIX = 0
-let UNIFORM_NORMAL_MATRIX = 1
+let UNIFORM_NORMAL_MATRIX              = 1
 var uniforms = [GLint](repeating: 0, count: 2)
 
 class GameViewController: GLKViewController {
+
+    var clearColour: Vec3 = Vec3(x: 0.8, y: 0.8, z: 0.8)
     
     var program: GLuint = 0
     
@@ -30,6 +33,9 @@ class GameViewController: GLKViewController {
     
     var context: EAGLContext? = nil
     var effect: GLKBaseEffect? = nil
+    
+    // GAMEPLAY
+    var motionManager   = CMMotionManager()
     
     deinit {
         self.tearDownGL()
@@ -52,6 +58,8 @@ class GameViewController: GLKViewController {
         view.context = self.context!
         view.drawableDepthFormat = .format24
         
+        motionManager.startAccelerometerUpdates()
+        
         self.setupGL()
     }
     
@@ -73,9 +81,7 @@ class GameViewController: GLKViewController {
     func setupGL() {
         EAGLContext.setCurrent(self.context)
         
-        if(self.loadShaders() == false) {
-            print("Failed to load shaders")
-        }
+        if (self.loadShaders() == false) { print("Failed to load shaders") }
         
         self.effect = GLKBaseEffect()
         self.effect!.light0.enabled = GLboolean(GL_TRUE)
@@ -90,10 +96,13 @@ class GameViewController: GLKViewController {
         glBindBuffer(GLenum(GL_ARRAY_BUFFER), vertexBuffer)
         glBufferData(GLenum(GL_ARRAY_BUFFER), GLsizeiptr(MemoryLayout<GLfloat>.size * gCubeVertexData.count), &gCubeVertexData, GLenum(GL_STATIC_DRAW))
         
-        glEnableVertexAttribArray(GLuint(GLKVertexAttrib.position.rawValue))
-        glVertexAttribPointer(GLuint(GLKVertexAttrib.position.rawValue), 3, GLenum(GL_FLOAT), GLboolean(GL_FALSE), 24, BUFFER_OFFSET(0))
-        glEnableVertexAttribArray(GLuint(GLKVertexAttrib.normal.rawValue))
-        glVertexAttribPointer(GLuint(GLKVertexAttrib.normal.rawValue), 3, GLenum(GL_FLOAT), GLboolean(GL_FALSE), 24, BUFFER_OFFSET(12))
+        // Position Attrib
+        glEnableVertexAttribArray   (GLuint(GLKVertexAttrib.position.rawValue))
+        glVertexAttribPointer       (GLuint(GLKVertexAttrib.position.rawValue), 3, GLenum(GL_FLOAT), GLboolean(GL_FALSE), 24, nil)
+        
+        // Normal Attrib
+        glEnableVertexAttribArray   (GLuint(GLKVertexAttrib.normal.rawValue))
+        glVertexAttribPointer       (GLuint(GLKVertexAttrib.normal.rawValue), 3, GLenum(GL_FLOAT), GLboolean(GL_FALSE), 24, BUFFER_OFFSET(12))
         
         glBindVertexArrayOES(0)
     }
@@ -123,35 +132,29 @@ class GameViewController: GLKViewController {
         var baseModelViewMatrix = GLKMatrix4MakeTranslation(0.0, 0.0, -4.0)
         baseModelViewMatrix = GLKMatrix4Rotate(baseModelViewMatrix, rotation, 0.0, 1.0, 0.0)
         
-        // Compute the model view matrix for the object rendered with GLKit
-        var modelViewMatrix = GLKMatrix4MakeTranslation(0.0, 0.0, -1.5)
-        modelViewMatrix = GLKMatrix4Rotate(modelViewMatrix, rotation, 1.0, 1.0, 1.0)
-        modelViewMatrix = GLKMatrix4Multiply(baseModelViewMatrix, modelViewMatrix)
-        
-        self.effect?.transform.modelviewMatrix = modelViewMatrix
-        
         // Compute the model view matrix for the object rendered with ES2
-        modelViewMatrix = GLKMatrix4MakeTranslation(0.0, 0.0, 1.5)
-        modelViewMatrix = GLKMatrix4Rotate(modelViewMatrix, rotation, 1.0, 1.0, 1.0)
+        var modelViewMatrix = GLKMatrix4MakeTranslation(0.0, 0.0, 0.0)
+        modelViewMatrix = GLKMatrix4Rotate(modelViewMatrix, rotation, 0.0, 1.0, 0.0)
         modelViewMatrix = GLKMatrix4Multiply(baseModelViewMatrix, modelViewMatrix)
         
         normalMatrix = GLKMatrix3InvertAndTranspose(GLKMatrix4GetMatrix3(modelViewMatrix), nil)
         
         modelViewProjectionMatrix = GLKMatrix4Multiply(projectionMatrix, modelViewMatrix)
         
-        rotation += Float(self.timeSinceLastUpdate * 0.5)
+        // rotation += Float(self.timeSinceLastUpdate * 0.5)
+        
+        // Process Input
+        processMotion()
     }
     
     override func glkView(_ view: GLKView, drawIn rect: CGRect) {
-        glClearColor(0.65, 0.65, 0.65, 1.0)
+        glClearColor(clearColour.x, clearColour.y, clearColour.z, 1.0)
         glClear(GLbitfield(GL_COLOR_BUFFER_BIT) | GLbitfield(GL_DEPTH_BUFFER_BIT))
         
         glBindVertexArrayOES(vertexArray)
         
         // Render the object with GLKit
-        self.effect?.prepareToDraw()
-        
-        glDrawArrays(GLenum(GL_TRIANGLES) , 0, 36)
+
         
         // Render the object again with ES2
         glUseProgram(program)
@@ -173,6 +176,21 @@ class GameViewController: GLKViewController {
     
     // MARK: -  OpenGL ES 2 shader compilation
     
+    func processMotion() {
+        if let data = motionManager.accelerometerData {
+            //if (fabs(data.acceleration.x) > 0.08) {
+                //player.velocity.dx += CGFloat(fmod(data.acceleration.x, 2))
+                //print(data.acceleration.x)
+                rotation = Float(data.acceleration.x * -0.6)
+            //}
+            
+            //if (fabs(data.acceleration.y) > 0.08) {
+                //player.velocity.dy += CGFloat(fmod(data.acceleration.y, 2))
+                //print(data.acceleration.x)
+            //}
+        }
+    }
+    
     func loadShaders() -> Bool {
         var vertShader: GLuint = 0
         var fragShader: GLuint = 0
@@ -183,14 +201,14 @@ class GameViewController: GLKViewController {
         program = glCreateProgram()
         
         // Create and compile vertex shader.
-        vertShaderPathname = Bundle.main.path(forResource: "Shader", ofType: "vsh")!
+        vertShaderPathname = Bundle.main.path(forResource: "Shader", ofType: "vert")!
         if self.compileShader(&vertShader, type: GLenum(GL_VERTEX_SHADER), file: vertShaderPathname) == false {
             print("Failed to compile vertex shader")
             return false
         }
         
         // Create and compile fragment shader.
-        fragShaderPathname = Bundle.main.path(forResource: "Shader", ofType: "fsh")!
+        fragShaderPathname = Bundle.main.path(forResource: "Shader", ofType: "frag")!
         if !self.compileShader(&fragShader, type: GLenum(GL_FRAGMENT_SHADER), file: fragShaderPathname) {
             print("Failed to compile fragment shader")
             return false
@@ -259,18 +277,7 @@ class GameViewController: GLKViewController {
         shader = glCreateShader(type)
         glShaderSource(shader, 1, &castSource, nil)
         glCompileShader(shader)
-        
-        //#if defined(DEBUG)
-        //        var logLength: GLint = 0
-        //        glGetShaderiv(shader, GLenum(GL_INFO_LOG_LENGTH), &logLength)
-        //        if logLength > 0 {
-        //            var log = UnsafeMutablePointer<GLchar>(malloc(Int(logLength)))
-        //            glGetShaderInfoLog(shader, logLength, &logLength, log)
-        //            NSLog("Shader compile log: \n%s", log)
-        //            free(log)
-        //        }
-        //#endif
-        
+
         glGetShaderiv(shader, GLenum(GL_COMPILE_STATUS), &status)
         if status == 0 {
             glDeleteShader(shader)
@@ -282,17 +289,6 @@ class GameViewController: GLKViewController {
     func linkProgram(_ prog: GLuint) -> Bool {
         var status: GLint = 0
         glLinkProgram(prog)
-        
-        //#if defined(DEBUG)
-        //        var logLength: GLint = 0
-        //        glGetShaderiv(shader, GLenum(GL_INFO_LOG_LENGTH), &logLength)
-        //        if logLength > 0 {
-        //            var log = UnsafeMutablePointer<GLchar>(malloc(Int(logLength)))
-        //            glGetShaderInfoLog(shader, logLength, &logLength, log)
-        //            NSLog("Shader compile log: \n%s", log)
-        //            free(log)
-        //        }
-        //#endif
         
         glGetProgramiv(prog, GLenum(GL_LINK_STATUS), &status)
         if status == 0 {
