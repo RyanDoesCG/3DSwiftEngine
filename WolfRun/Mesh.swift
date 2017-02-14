@@ -7,6 +7,7 @@
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 import OpenGLES
 import GLKit
+import SwiftMath
 
 class Mesh {
 
@@ -15,11 +16,21 @@ class Mesh {
     private var VBO: GLuint = 0
     private var vertData: [GLfloat]
     
+    private let UNIFORM_MODEL = 0
+    private let UNIFORM_VIEW = 1
+    private let UNIFORM_PROJECTION = 2
+    private let UNIFORM_NORMAL_MATRIX = 3
+    private let UNIFORM_COLOUR = 4
+    private var uniforms = [GLint](repeating: 0, count: 5)
+    
     // transformation matrices
     private var model: GLKMatrix4 = GLKMatrix4Identity
     
-    private var normalMatrix:              GLKMatrix3 = GLKMatrix3Identity
-    private var rotation:                  Float      = 0.0
+    private var normalMatrix: GLKMatrix3 = GLKMatrix3Identity
+    
+    private var position: Vec3 = Vec3(x: 0, y: 0, z: 0)
+    private var rotation: Vec3 = Vec3(x: 0, y: 0, z: 0)
+    private var colour:   Vec4 = Vec4(r: 0.24, g: 0.0, b: 0.0, a: 1.0)
     
     init (v: [GLfloat]) {
         vertData = v
@@ -51,25 +62,39 @@ class Mesh {
         glBindVertexArrayOES(VAO)
     }
     
-    func update () {
-        rotation += 0.1
-    }
+    func setPosition (x: Float, y: Float, z: Float)           { position = Vec3(x:x, y:y, z:z) }
+    func setRotation (x: Float, y: Float, z: Float)           { rotation = Vec3(x:x, y:y, z:z) }
+    func setColour   (r: Float, g: Float, b: Float, a: Float) { colour   = Vec4(r:r, g:g, b:b, a:a) }
     
     func draw (shader: Shader, camera: Camera) {
-        model = GLKMatrix4MakeTranslation(0.0, 0.0, -4.0)
-        model = GLKMatrix4Rotate(model, rotation, 0.0, 1.0, 0.0)
         
-        var viewMat = camera.getViewMatrix()
-        var projMat = camera.getProjectionMatrix()
+        // make model
+        model = GLKMatrix4MakeTranslation(position.x, position.y, position.z)
+        model = GLKMatrix4Rotate(model, rotation.x, 1.0, 0.0, 0.0)
+        model = GLKMatrix4Rotate(model, rotation.y, 0.0, 1.0, 0.0)
+        model = GLKMatrix4Rotate(model, rotation.z, 0.0, 0.0, 1.0)
+        
+        // make viewProjection
+        var viewMat             = camera.getViewMatrix()
+        var projMat             = camera.getProjectionMatrix()
+        let modelView           = GLKMatrix4Multiply(model, viewMat)
+        let modelViewProjection = GLKMatrix4Multiply(modelView, projMat)
         
         // will fuck up lighting
-        normalMatrix = GLKMatrix3InvertAndTranspose(GLKMatrix4GetMatrix3(model), nil)
+        normalMatrix = GLKMatrix3InvertAndTranspose(GLKMatrix4GetMatrix3(modelViewProjection), nil)
         
-        uniforms[UNIFORM_MODEL] = glGetUniformLocation(shader.getProgramID(), "model")
-        uniforms[UNIFORM_VIEW] = glGetUniformLocation(shader.getProgramID(), "view")
-        uniforms[UNIFORM_PROJECTION] = glGetUniformLocation(shader.getProgramID(), "projection")
+        // make colour
+        var colourUni = GLKVector4()
+        colourUni.x   = colour.r()
+        colourUni.y   = colour.g()
+        colourUni.z   = colour.b()
+        colourUni.w   = colour.a()
         
-        uniforms[UNIFORM_NORMAL_MATRIX] = glGetUniformLocation(shader.getProgramID(), "normal")
+        uniforms[UNIFORM_MODEL]          = glGetUniformLocation(shader.getProgramID(), "model")
+        uniforms[UNIFORM_VIEW]           = glGetUniformLocation(shader.getProgramID(), "view")
+        uniforms[UNIFORM_PROJECTION]     = glGetUniformLocation(shader.getProgramID(), "projection")
+        uniforms[UNIFORM_NORMAL_MATRIX]  = glGetUniformLocation(shader.getProgramID(), "normal")
+        uniforms[UNIFORM_COLOUR]         = glGetUniformLocation(shader.getProgramID(), "colour")
 
         
         withUnsafePointer(to: &model, {
@@ -93,6 +118,12 @@ class Mesh {
         withUnsafePointer(to: &normalMatrix, {
             $0.withMemoryRebound(to: Float.self, capacity: 9, {
                 glUniformMatrix3fv(uniforms[UNIFORM_NORMAL_MATRIX], 1, 0, $0)
+            })
+        })
+        
+        withUnsafePointer(to: &colourUni, {
+            $0.withMemoryRebound(to: Float.self, capacity: 9, {
+                glUniform4fv(uniforms[UNIFORM_COLOUR], 1, $0)
             })
         })
         

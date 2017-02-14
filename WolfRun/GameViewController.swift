@@ -8,24 +8,17 @@
 import GLKit
 import OpenGLES
 import CoreMotion
+import SwiftMath
 
 func BUFFER_OFFSET(_ i: Int) -> UnsafeRawPointer {return UnsafeRawPointer(bitPattern: i)!}
-
-let UNIFORM_MODEL = 0
-let UNIFORM_VIEW = 1
-let UNIFORM_PROJECTION = 2
-let UNIFORM_NORMAL_MATRIX = 3
-var uniforms = [GLint](repeating: 0, count: 4)
 
 class GameViewController: GLKViewController {
 
     var clearColour: Vec3 = Vec3(x: 0.8, y: 0.8, z: 0.8)
-    
-    var scene: Scene!
-    var cube: Cube!
-    
     var context: EAGLContext?   = nil
     var effect:  GLKBaseEffect? = nil
+    
+    var scene: Scene!
     
     // GAMEPLAY
     var motionManager = CMMotionManager()
@@ -58,9 +51,32 @@ class GameViewController: GLKViewController {
         /* * * * * * * * * * *
          *  populate scene
          */
-         cube = Cube()
+         let cube = Cube()
+         let quad = Quad()
+         let pyr  = Pyramid()
+         let tri  = Triangle()
+        
+         cube.position.z = -6
+         cube.position.x = -1.5
+         cube.twirling = true
+        
+         quad.position.z = -6
+         quad.position.x = -3.5
+         quad.twirling = true
+        
+         pyr.position.z = -6
+         pyr.position.x = 1.5
+         pyr.twirling = true
+        
+         tri.position.z = -6
+         tri.position.x = 3.5
+         tri.twirling = true
+        
          scene = Scene(w: Float(self.view.bounds.size.width), h: Float(self.view.bounds.size.height))
          scene.add(new: cube)
+         scene.add(new: quad)
+         scene.add(new: pyr)
+         scene.add(new: tri)
     }
     
     override func didReceiveMemoryWarning() {
@@ -106,8 +122,7 @@ class GameViewController: GLKViewController {
     func update() {
         self.effect?.transform.projectionMatrix = scene.getProjectionMatrix()
         
-        
-        cube.update()
+        scene.simulate()
         
         // Process Input
         processMotion()

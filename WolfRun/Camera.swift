@@ -8,13 +8,23 @@
 
 import OpenGLES
 import GLKit
+import SwiftMath
 
 class Camera {
+    private var position:  Vec3! = Vec3 (x: 0.0, y: 0.0, z: 0.0)
+    private var target:    Vec3! = Vec3 (x: 0.0, y: 0.0, z: 0.0)
+    private var direction: Vec3!
+
     private var viewMatrix: GLKMatrix4 = GLKMatrix4Identity
     private var projectionMatrix: GLKMatrix4 = GLKMatrix4Identity
     private var aspect: Float = 0
     
-    init () {}
+    init () {
+        position = Vec3 (x: 0.0, y: 0.0, z: 0.0)
+        target = Vec3 (x: 0.0, y: 0.0, z: 0.0)
+        direction = (position - target)
+        direction = direction.normalise()
+    }
     
     func update (width: Float, height: Float) {
         aspect = fabsf(Float(width / height))

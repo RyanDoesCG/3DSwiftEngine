@@ -6,6 +6,7 @@
  *  Copyright © 2017 Baked Goods Studios. All rights reserved.
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 import Foundation
+import SwiftMath
 
 protocol Actor {
     var position: Vec3 { get set }
