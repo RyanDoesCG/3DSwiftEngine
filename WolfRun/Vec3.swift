@@ -30,7 +30,30 @@ class Vec3 {
         self.z -= other.z
     }
     
+    func mul (factor: Float) {
+        self.x *= factor
+        self.y *= factor
+        self.z *= factor
+    }
+    
+    func div (factor: Float) {
+        if (factor != 0) {
+            self.x = self.x / factor
+            self.y = self.y / factor
+            self.z = self.z / factor
+        }
+    }
+    
     func normalise () {
-        
+        let mag = magnitude()
+        if (mag != 0) {
+            div(factor: mag)
+        }
+    }
+    
+    func magnitude () -> Float {
+        return sqrt((self.x * self.x) +
+                    (self.y * self.y) +
+                    (self.z * self.z))
     }
 }

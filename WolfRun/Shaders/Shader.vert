@@ -11,7 +11,10 @@ attribute vec3 normal;
 
 varying lowp vec4 colorVarying;
 
-uniform mat4 modelViewProjectionMatrix;
+uniform mat4 model;
+uniform mat4 view;
+uniform mat4 projection;
+
 uniform mat3 normalMatrix;
 
 void main() {
@@ -23,5 +26,5 @@ void main() {
                  
     colorVarying = diffuseColor * nDotVP;
     
-    gl_Position = modelViewProjectionMatrix * position;
+    gl_Position = projection * view * model * position;
 }

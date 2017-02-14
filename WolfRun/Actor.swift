@@ -11,6 +11,6 @@ protocol Actor {
     var position: Vec3 { get set }
     var velocity: Vec3 { get set }
     
-    func update ()
-    func draw   ()
+    func update () 
+    func draw   (camera: Camera)
 }

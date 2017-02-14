@@ -8,7 +8,7 @@
 import OpenGLES
 import GLKit
 
-class ShaderProgram {
+class Shader {
     private var programID: GLuint!
     private var vertID:    GLuint = 0
     private var fragID:    GLuint = 0
@@ -25,7 +25,7 @@ class ShaderProgram {
             return;
         }
         
-        let fragShaderPathname = Bundle.main.path(forResource: "Shader", ofType: "frag")!
+        let fragShaderPathname = Bundle.main.path(forResource: path, ofType: "frag")!
         if !self.compile(&fragID, type: GLenum(GL_FRAGMENT_SHADER), file: fragShaderPathname) {
             print("Failed to compile fragment shader")
             return;
@@ -56,10 +56,6 @@ class ShaderProgram {
                 programID = 0
             }
         }
-        
-        // Get uniform locations
-        uniforms[UNIFORM_MODELVIEWPROJECTION_MATRIX] = glGetUniformLocation(programID, "modelViewProjectionMatrix")
-        uniforms[UNIFORM_NORMAL_MATRIX] = glGetUniformLocation(programID, "normalMatrix")
         
         // Release vertex and fragment shaders
         if vertID != 0 {
@@ -112,6 +108,10 @@ class ShaderProgram {
         }
         
         return true
+    }
+    
+    func getProgramID () -> GLuint {
+        return programID
     }
     
     func bind () {
