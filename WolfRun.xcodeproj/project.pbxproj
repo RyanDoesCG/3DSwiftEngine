@@ -16,6 +16,8 @@
 		CE07A9811E51DE110024895C /* Scene.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE07A9801E51DE110024895C /* Scene.swift */; };
 		CE07A9831E51DEBD0024895C /* Cube.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE07A9821E51DEBD0024895C /* Cube.swift */; };
 		CE7B16591E53734A0016CB34 /* SwiftMath.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CE7B16571E53733B0016CB34 /* SwiftMath.framework */; };
+		CE82D7D51E58CD33008EABDB /* Player.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE82D7D41E58CD33008EABDB /* Player.swift */; };
+		CE82D7D71E58D1AB008EABDB /* Plane.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE82D7D61E58D1AB008EABDB /* Plane.swift */; };
 		CEE675A11E513D1800051914 /* Actor.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEE675A01E513D1800051914 /* Actor.swift */; };
 		CEE675A31E5146D100051914 /* Shader.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEE675A21E5146D100051914 /* Shader.swift */; };
 		CEE675A51E514E1300051914 /* Mesh.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEE675A41E514E1300051914 /* Mesh.swift */; };
@@ -52,6 +54,8 @@
 		CE07A9801E51DE110024895C /* Scene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Scene.swift; sourceTree = "<group>"; };
 		CE07A9821E51DEBD0024895C /* Cube.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Cube.swift; sourceTree = "<group>"; };
 		CE7B16571E53733B0016CB34 /* SwiftMath.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftMath.framework; path = "../../../Library/Developer/Xcode/DerivedData/3DSwiftEngine-elsvmdhqxxpdowfnfdphbjwrzikv/Build/Products/Debug-iphoneos/SwiftMath.framework"; sourceTree = "<group>"; };
+		CE82D7D41E58CD33008EABDB /* Player.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Player.swift; sourceTree = "<group>"; };
+		CE82D7D61E58D1AB008EABDB /* Plane.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Plane.swift; sourceTree = "<group>"; };
 		CEE675A01E513D1800051914 /* Actor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Actor.swift; sourceTree = "<group>"; };
 		CEE675A21E5146D100051914 /* Shader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Shader.swift; sourceTree = "<group>"; };
 		CEE675A41E514E1300051914 /* Mesh.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Mesh.swift; sourceTree = "<group>"; };
@@ -121,6 +125,8 @@
 				CE07A9801E51DE110024895C /* Scene.swift */,
 				CEE675A01E513D1800051914 /* Actor.swift */,
 				CE07A9821E51DEBD0024895C /* Cube.swift */,
+				CE82D7D61E58D1AB008EABDB /* Plane.swift */,
+				CE82D7D41E58CD33008EABDB /* Player.swift */,
 				623434481E53AF4F00460B18 /* ParticleSpawner.swift */,
 				623434441E53A8CB00460B18 /* Quad.swift */,
 				62FFA6DC1E539C9600D2E2D0 /* Triangle.swift */,
@@ -214,6 +220,8 @@
 				623434451E53A8CB00460B18 /* Quad.swift in Sources */,
 				CEE675A31E5146D100051914 /* Shader.swift in Sources */,
 				62FFA6DD1E539C9600D2E2D0 /* Triangle.swift in Sources */,
+				CE82D7D51E58CD33008EABDB /* Player.swift in Sources */,
+				CE82D7D71E58D1AB008EABDB /* Plane.swift in Sources */,
 				CE07A9831E51DEBD0024895C /* Cube.swift in Sources */,
 				CE07A9811E51DE110024895C /* Scene.swift in Sources */,
 				623434471E53ABB300460B18 /* Pyramid.swift in Sources */,

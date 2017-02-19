@@ -84,11 +84,7 @@ class Mesh {
         normalMatrix = GLKMatrix3InvertAndTranspose(GLKMatrix4GetMatrix3(modelViewProjection), nil)
         
         // make colour
-        var colourUni = GLKVector4()
-        colourUni.x   = colour.r()
-        colourUni.y   = colour.g()
-        colourUni.z   = colour.b()
-        colourUni.w   = colour.a()
+        var colourUni = colour.asGLKVector
         
         uniforms[UNIFORM_MODEL]          = glGetUniformLocation(shader.getProgramID(), "model")
         uniforms[UNIFORM_VIEW]           = glGetUniformLocation(shader.getProgramID(), "view")

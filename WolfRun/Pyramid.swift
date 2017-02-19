@@ -50,7 +50,7 @@ class Pyramid : Actor {
         // move mesh
         mesh.setPosition(x: position.x, y: position.y, z: position.z)
         mesh.setRotation(x: rotation.x, y: rotation.y, z: rotation.z)
-        mesh.setColour(r: colour.r(), g: colour.g(), b: colour.b(), a: colour.a())
+        mesh.setColour(r: colour.r, g: colour.g, b: colour.b, a: colour.a)
         
     }
     

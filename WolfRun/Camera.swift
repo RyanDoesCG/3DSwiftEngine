@@ -23,7 +23,7 @@ class Camera {
         position = Vec3 (x: 0.0, y: 0.0, z: 0.0)
         target = Vec3 (x: 0.0, y: 0.0, z: 0.0)
         direction = (position - target)
-        direction = direction.normalise()
+        direction = direction.normalised
     }
     
     func update (width: Float, height: Float) {

@@ -7,6 +7,7 @@
 //
 
 import SwiftMath
+import GLKit
 
 class FlyweightModel {
     var position: Vec3 = Vec3()
@@ -29,23 +30,26 @@ class ParticleSpawner: Actor {
     var rotation: Vec3 = Vec3(x: 0, y: 0, z: 0)
     var velocity: Vec3 = Vec3(x: 0, y: 0, z: 0)
     
-    private var particle: Triangle!
+    private var particle: Quad!
     private var flyweights = [FlyweightModel]()
+    private var spawnRange: Float = 10.0
     
     private var rng = Random()
     
-    var particleCount: Int = 200
+    var particleCount: Int = 10
     
     init () {
         
         // initialise particles
-        particle = Triangle()
+        particle = Quad()
         
-        for i in (particleCount/2) * -1 ... particleCount/2 { flyweights.append(FlyweightModel(
-            pos: Vec3(x: Float(Float(i) * 0.5), y: 0, z: 0),
-            rot: Vec3(),
-            vel: Vec3(x: rng.getUnsignedBasicFloat() * 0.01, y: rng.getUnsignedBasicFloat() * 0.01, z: 0)
-        ))}
+        for _ in 0 ... particleCount {
+            flyweights.append(FlyweightModel(
+                pos: Vec3(x: rng.getUnsignedBasicFloat(), y: 0, z: 0),
+                rot: Vec3(),
+                vel: Vec3(x: 0, y: rng.getUnsignedBasicFloat(), z: 0)
+            ))
+        }
     }
     
     func setPosition (pos: Vec3) {
@@ -55,18 +59,27 @@ class ParticleSpawner: Actor {
     }
     
     func update () {
-        flyweights.forEach { $0.update() }
+        flyweights.forEach {
+            $0.update()
+            
+            let distanceFromSpawn: Float = GLKVector3Length((self.position - $0.position).asGLKVector)
+            print ("distance from spawn: \(distanceFromSpawn)")
+            if (distanceFromSpawn > spawnRange) {
+                $0.position = self.position;
+            }
+        }
+        
     }
     
     func draw(camera: Camera) {
         flyweights.forEach {
             particle.position = $0.position
             particle.rotation = $0.rotation
-            particle.velocity = $0.velocity
+            //particle.velocity = $0.velocity
             
             print("\n")
-            print($0.position.toString())
-            print($0.velocity.toString())
+            print($0.position.string)
+            print($0.velocity.string)
             print("\n")
             
             particle.update()
